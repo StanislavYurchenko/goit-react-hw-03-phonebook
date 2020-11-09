@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
+import styles from './PhoneBook.module.css';
 import ContactForm from '../ContactForm/ContactForm';
 import Filter from '../Filter/Filter';
 import ContactList from '../ContactList/ContactList';
 
-const defaultState = {
-  contacts: [
-    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-  ],
-  filter: '',
-};
-
 class PhoneBook extends Component {
   state = {
-    ...defaultState,
+    contacts: [],
+    filter: '',
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      this.setContactsToLocalStorage();
+    }
+  }
+
+  componentDidMount() {
+    this.setState({ contacts: this.getContactsFromLocalStorage() });
+  }
+
+  setContactsToLocalStorage = () => {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  };
+
+  getContactsFromLocalStorage = () => {
+    return JSON.parse(localStorage.getItem('contacts'));
   };
 
   addContact = newContact => {
@@ -39,15 +49,16 @@ class PhoneBook extends Component {
     return contacts.some(contact => contact.name === name);
   };
 
+  containerClasses = [styles.container];
+
   render() {
     const { filter, contacts } = this.state;
     return (
-      <div>
-        <h1>Phonebook</h1>
-
+      <div className={this.containerClasses.join(' ')}>
+        <h1 className={styles.title}>Phonebook</h1>
         <ContactForm addContact={this.addContact} isExistContact={this.isExistContact} />
 
-        <h2>Contacts</h2>
+        <h2 className={styles['sub-title']}>Contacts</h2>
         <Filter filter={filter} onChange={this.onChange} />
         <ContactList filter={filter} contacts={contacts} removeContactById={this.removeContactById} />
       </div>

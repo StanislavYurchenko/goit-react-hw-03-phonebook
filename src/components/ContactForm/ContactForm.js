@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
-const defaultState = {
-  name: '',
-  number: '',
-};
+import styles from './ContactForm.module.css';
 
 class ContactForm extends Component {
   state = {
-    ...defaultState,
+    name: '',
+    number: '',
   };
 
   onChange = event => {
@@ -19,10 +16,8 @@ class ContactForm extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { name, number } = this.state;
-    const { addContact, isExistContact } = this.props
-    isExistContact(name)
-      ? alert(`${name} contact already exists`)
-      : addContact({ name, number, id: uuidv4() })
+    const { addContact, isExistContact } = this.props;
+    isExistContact(name) ? alert(`${name} contact already exists`) : addContact({ name, number, id: uuidv4() });
     this.reset();
   };
 
@@ -35,17 +30,16 @@ class ContactForm extends Component {
     return (
       <form onSubmit={this.onSubmit}>
         <h3>Name</h3>
-        <input name="name" value={name} onChange={this.onChange} type='text' />
+        <input className={styles.input} name="name" value={name} onChange={this.onChange} type="text" />
 
         <h3>Number</h3>
-        <input name="number" value={number} onChange={this.onChange} type='text' />
+        <input className={styles.input} name="number" value={number} onChange={this.onChange} type="text" />
 
-        <br />
-
-        <button type="submit">Add contact</button>
+        <button className={styles['remove-btn']} type="submit">
+          Add contact
+        </button>
       </form>
-    )
-
+    );
   }
 }
 
