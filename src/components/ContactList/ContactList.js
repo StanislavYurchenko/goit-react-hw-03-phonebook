@@ -17,17 +17,16 @@ function ContactList({ contacts, filter, removeContactById }) {
     );
   };
 
+  console.log('1', contacts);
   return (
     <>
-      {!!contacts.length && (
-        <ul className={styles.contacts}>
-          {filter
-            ? contacts
-              .filter(contact => contact.name.toLowerCase().trim().includes(filter.toLowerCase().trim()))
-              .map(contact => markupContact(contact, removeContactById))
-            : contacts.map(contact => markupContact(contact, removeContactById))}
-        </ul>
-      )}
+      <ul className={styles.contacts}>
+        {filter
+          ? contacts
+            .filter(contact => contact.name.toLowerCase().trim().includes(filter.toLowerCase().trim()))
+            .map(contact => markupContact(contact, removeContactById))
+          : contacts.map(contact => markupContact(contact, removeContactById))}
+      </ul>
     </>
   );
 }

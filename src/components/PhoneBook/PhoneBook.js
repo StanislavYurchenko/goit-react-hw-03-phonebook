@@ -25,7 +25,8 @@ class PhoneBook extends Component {
   };
 
   getContactsFromLocalStorage = () => {
-    return JSON.parse(localStorage.getItem('contacts'));
+    const localStorageData = JSON.parse(localStorage.getItem('contacts'))
+    return localStorageData ? localStorageData : [];
   };
 
   addContact = newContact => {
@@ -53,14 +54,16 @@ class PhoneBook extends Component {
 
   render() {
     const { filter, contacts } = this.state;
+    console.log('0', contacts);
     return (
       <div className={this.containerClasses.join(' ')}>
         <h1 className={styles.title}>Phonebook</h1>
         <ContactForm addContact={this.addContact} isExistContact={this.isExistContact} />
 
-        <h2 className={styles['sub-title']}>Contacts</h2>
-        <Filter filter={filter} onChange={this.onChange} />
-        <ContactList filter={filter} contacts={contacts} removeContactById={this.removeContactById} />
+        {!!contacts.length && <h2 className={styles['sub-title']}>Contacts</h2>}
+        {!!contacts.length && <Filter filter={filter} onChange={this.onChange} />}
+        {!!contacts.length && <ContactList filter={filter} contacts={contacts} removeContactById={this.removeContactById} />}
+
       </div>
     );
   }
