@@ -23,6 +23,7 @@
   transition: all 0.3s linear;
   margin-bottom: 30px;
   width: 100%;
+  outline: none;
 }
 
 .remove-btn:hover {
