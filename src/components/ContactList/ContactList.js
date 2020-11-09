@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './ContactList.module.css';
 
 function ContactList({ contacts, filter, removeContactById }) {
@@ -17,7 +18,6 @@ function ContactList({ contacts, filter, removeContactById }) {
     );
   };
 
-  console.log('1', contacts);
   return (
     <>
       <ul className={styles.contacts}>
@@ -29,6 +29,16 @@ function ContactList({ contacts, filter, removeContactById }) {
       </ul>
     </>
   );
+}
+
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(PropTypes.exact({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    number: PropTypes.string,
+  })),
+  filter: PropTypes.string,
+  removeContactById: PropTypes.func,
 }
 
 export default ContactList;

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './ContactForm.module.css';
+
 
 class ContactForm extends Component {
   state = {
@@ -41,6 +43,11 @@ class ContactForm extends Component {
       </form>
     );
   }
+}
+
+ContactForm.propTypes = {
+  addContact: PropTypes.func,
+  isExistContact: PropTypes.func,
 }
 
 export default ContactForm;

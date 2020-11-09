@@ -54,7 +54,6 @@ class PhoneBook extends Component {
 
   render() {
     const { filter, contacts } = this.state;
-    console.log('0', contacts);
     return (
       <div className={this.containerClasses.join(' ')}>
         <h1 className={styles.title}>Phonebook</h1>
