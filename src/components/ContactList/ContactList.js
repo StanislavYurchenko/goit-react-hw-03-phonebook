@@ -30,15 +30,21 @@ function ContactList({ contacts, filter, removeContactById }) {
     </>
   );
 }
+ContactList.defaultProps = {
+  contacts: {
+    number: '',
+  }
+}
+
 
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(PropTypes.exact({
-    id: PropTypes.string,
-    name: PropTypes.string,
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     number: PropTypes.string,
   })),
-  filter: PropTypes.string,
-  removeContactById: PropTypes.func,
+  filter: PropTypes.string.isRequired,
+  removeContactById: PropTypes.func.isRequired,
 }
 
 export default ContactList;
