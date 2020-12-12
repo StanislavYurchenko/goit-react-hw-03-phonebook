@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styles from './PhoneBook.module.css';
 import ContactForm from '../ContactForm/ContactForm';
 import Filter from '../Filter/Filter';
@@ -25,7 +27,7 @@ class PhoneBook extends Component {
   };
 
   getContactsFromLocalStorage = () => {
-    const localStorageData = JSON.parse(localStorage.getItem('contacts'))
+    const localStorageData = JSON.parse(localStorage.getItem('contacts'));
     return localStorageData ? localStorageData : [];
   };
 
@@ -57,12 +59,23 @@ class PhoneBook extends Component {
     return (
       <div className={this.containerClasses.join(' ')}>
         <h1 className={styles.title}>Phonebook</h1>
-        <ContactForm addContact={this.addContact} isExistContact={this.isExistContact} />
+        <ContactForm
+          addContact={this.addContact}
+          isExistContact={this.isExistContact}
+        />
 
-        {!!contacts.length && <h2 className={styles['sub-title']}>Contacts</h2>}
-        {!!contacts.length && <Filter filter={filter} onChange={this.onChange} />}
-        {!!contacts.length && <ContactList filter={filter} contacts={contacts} removeContactById={this.removeContactById} />}
-
+        {contacts.length > 0 && (
+          <>
+            <h2 className={styles['sub-title']}>Contacts</h2>
+            <Filter filter={filter} onChange={this.onChange} />
+            <ContactList
+              filter={filter}
+              contacts={contacts}
+              removeContactById={this.removeContactById}
+            />
+          </>
+        )}
+        <ToastContainer autoClose={3000} />
       </div>
     );
   }

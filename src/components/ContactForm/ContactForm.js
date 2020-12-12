@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './ContactForm.module.css';
-
 
 class ContactForm extends Component {
   state = {
@@ -19,7 +19,18 @@ class ContactForm extends Component {
     event.preventDefault();
     const { name, number } = this.state;
     const { addContact, isExistContact } = this.props;
-    isExistContact(name) ? alert(`${name} contact already exists`) : addContact({ name, number, id: uuidv4() });
+    const normalizedName = name.trim();
+
+    if (isExistContact(name)) {
+      return toast.error(`"${normalizedName}" contact already exists`);
+    }
+
+    if (!normalizedName) {
+      return toast.error('Enter contact name');
+    }
+
+    addContact({ name: normalizedName, number, id: uuidv4() });
+
     this.reset();
   };
 
@@ -32,10 +43,22 @@ class ContactForm extends Component {
     return (
       <form onSubmit={this.onSubmit}>
         <h3>Name</h3>
-        <input className={styles.input} name="name" value={name} onChange={this.onChange} type="text" />
+        <input
+          className={styles.input}
+          name="name"
+          value={name}
+          onChange={this.onChange}
+          type="text"
+        />
 
         <h3>Number</h3>
-        <input className={styles.input} name="number" value={number} onChange={this.onChange} type="text" />
+        <input
+          className={styles.input}
+          name="number"
+          value={number}
+          onChange={this.onChange}
+          type="text"
+        />
 
         <button className={styles['remove-btn']} type="submit">
           Add contact
@@ -48,6 +71,6 @@ class ContactForm extends Component {
 ContactForm.propTypes = {
   addContact: PropTypes.func.isRequired,
   isExistContact: PropTypes.func.isRequired,
-}
+};
 
 export default ContactForm;
